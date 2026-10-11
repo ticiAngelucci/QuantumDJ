@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title">
+  <title id="title">QuantumDJ audio wave</title>
+  <rect x="1" y="1" width="38" height="38" rx="9" fill="#2457EA" stroke="#19284D" stroke-width="2"/>
+  <rect x="8" y="14" width="4" height="12" rx="2" fill="#FFFFFF"/>
+  <rect x="14.5" y="9" width="4" height="22" rx="2" fill="#FFFFFF"/>
+  <rect x="21.5" y="6" width="4" height="28" rx="2" fill="#FFDB35"/>
+  <rect x="28" y="12" width="4" height="16" rx="2" fill="#FFFFFF"/>
+</svg>

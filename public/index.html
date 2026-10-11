@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2457EA">
+  <meta name="description" content="Explorá ideas musicales con un instrumento de cuatro qubits. Generá loops, escuchá las mediciones y exportá MIDI." data-i18n-content="meta.description">
+  <title>QuantumDJ — Qubits into grooves</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<header class="topbar">
+  <a href="#" class="brand" aria-label="QuantumDJ inicio" data-i18n-aria="brand.home"><img class="brandmark" src="favicon.svg" width="40" height="40" alt="" aria-hidden="true">Quantum<span>DJ</span></a>
+  <nav class="header-nav" aria-label="Secciones" data-i18n-aria="nav.sections">
+    <a href="#studio" data-i18n="nav.studio">EL ESTUDIO</a>
+    <a href="#how-it-works" data-i18n="nav.how">CÓMO FUNCIONA</a>
+  </nav>
+  <div class="header-actions">
+    <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch to English" title="Switch to English">
+      <span class="language-option active" data-language="es">ES</span><span aria-hidden="true">/</span><span class="language-option" data-language="en">EN</span>
+    </button>
+    <button id="ionq-open" class="quiet"><span id="ionq-open-label" data-i18n="ionq.connect">Conectar IonQ</span> <span aria-hidden="true">↗</span></button>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">CUATRO QUBITS. CERO MIEDO.</span></div>
+      <h1 data-i18n-html="hero.title">TUS IDEAS.<br>OTRO<br><em>UNIVERSO.</em></h1>
+      <p data-i18n="hero.body">Jugá con las probabilidades, encontrá tu próximo loop y llevátelo a tu DAW. Este estudio es tuyo.</p>
+      <div class="hero-actions"><a href="#studio" class="primary" data-i18n="hero.cta">AL ESTUDIO ↘</a></div>
+      <span class="hero-note" data-i18n="hero.note">UN EXPERIMENTO MUSICAL PARA QOLLAB / VOL. 01</span>
+    </div>
+    <div class="hero-mascot">
+      <div class="mascot-backplate" aria-hidden="true"></div>
+      <span class="mascot-hello" data-i18n="mascot.hello">HEY! SOY QUBI ♫</span>
+      <span class="mascot-star" aria-hidden="true"><b>4</b>QUBITS</span>
+      <img class="mascot-image" src="assets/Qubi-QuantumDJ.png" width="1312" height="1199" alt="Qubi, la mascota robot de QuantumDJ, con auriculares amarillos y una consola DJ azul" data-i18n-alt="mascot.alt">
+      <span class="mascot-caption" data-i18n="mascot.caption">TU COPILOTO DE LOOPS ↗</span>
+    </div>
+  </section>
+
+  <div class="feature-strip" aria-label="Funciones" data-i18n-aria="features.label">
+    <span><i aria-hidden="true">✦</i> <span data-i18n="features.states">4 QUBITS / 16 ESTADOS</span></span>
+    <span><i aria-hidden="true">♫</i> <span data-i18n="features.generate">GENERÁ + ESCUCHÁ</span></span>
+    <span><i aria-hidden="true">↗</i> <span data-i18n="features.export">EXPORTÁ MIDI + WAV</span></span>
+    <span><i aria-hidden="true">✦</i> <span data-i18n="features.own">HACÉLO TUYO</span></span>
+  </div>
+
+  <div class="workspace" id="studio">
+    <section class="studio panel" aria-label="Secuenciador musical" data-i18n-aria="studio.label">
+      <div class="panel-head">
+        <div><div class="eyebrow" data-i18n="studio.yourLoop">TU LOOP</div><h2 id="loop-title">Sesión 001</h2></div>
+        <span id="source" class="badge">SIMULACIÓN LOCAL</span>
+      </div>
+      <div class="cloudbar">
+        <label for="backend"><span data-i18n="studio.engine">MOTOR</span>
+          <select id="backend">
+            <option value="ionq" selected data-i18n="studio.ionqBackend">IonQ · simulador cloud</option>
+            <option value="local" data-i18n="studio.localBackend">Local · prueba sin API</option>
+          </select>
+        </label>
+        <button id="ionq-run" class="primary" data-i18n="studio.runIonq">⚛ Ejecutar en IonQ</button>
+        <span id="cloud-status" role="status">Conectá tu key para ejecutar.</span>
+      </div>
+      <div class="transport">
+        <button id="play" class="primary"><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">Escuchar loop</span></button>
+        <button id="generate" class="square" title="Generar una nueva secuencia" aria-label="Generar una nueva secuencia" data-i18n-title="studio.generateTitle" data-i18n-aria="studio.generateTitle">↻</button>
+        <span id="position" class="mono">00 / 32</span>
+        <div class="transport-right">
+          <span id="duration" class="mono"></span>
+          <button id="midi" class="quiet">↓ MIDI</button>
+          <button id="wav" class="quiet">↓ WAV</button>
+          <button id="result-download" class="quiet" title="Descargar evidencia de ejecución" data-i18n-title="studio.downloadEvidence" disabled>↓ JSON</button>
+        </div>
+      </div>
+      <div class="roll-wrap">
+        <div class="roll-labels" id="labels"></div>
+        <div class="roll" id="roll" aria-label="Piano roll: notas generadas" data-i18n-aria="studio.rollLabel"></div>
+      </div>
+      <div class="timeline">
+        <span data-i18n="studio.barOne">COMPÁS 01</span><span id="bars">COMPÁS 02</span>
+        <span class="legend"><i></i> <span data-i18n="studio.note">NOTA</span> <i class="accent"></i> <span data-i18n="studio.accent">ACENTO</span></span>
+      </div>
+      <div class="drum-legend"><span class="mono" data-i18n="studio.classicLayers">+ CAPAS CLÁSICAS</span><span data-i18n="studio.layers">Batería · Bajo · Guitarra</span><span id="seed-label" class="mono"></span></div>
+      <div class="prob-head"><h3 data-i18n="studio.statesToSounds">De estados a sonidos</h3><span class="mono">q3 q2 q1 q0</span></div>
+      <div class="histogram" id="histogram" aria-label="Probabilidades de los 16 estados cuánticos" data-i18n-aria="studio.histogramLabel"></div>
+      <div class="metrics">
+        <div><span id="entropy">—</span><small data-i18n="studio.entropy">ENTROPÍA DE MEDICIÓN / BITS</small></div>
+        <div><span id="correlation">—</span><small data-i18n="studio.correlation">CORRELACIÓN q0 ↔ q1 / BITS</small></div>
+        <div><span id="notes">—</span><small data-i18n="studio.notes">NOTAS EN ESTE LOOP</small></div>
+      </div>
+      <p class="provenance" id="provenance">Probabilidades de un circuito simulado en tu navegador.</p>
+    </section>
+
+    <aside class="controls panel" aria-label="Controles de composición" data-i18n-aria="controls.label">
+      <div class="eyebrow" data-i18n="controls.eyebrow">DALE TU DIRECCIÓN</div>
+      <h2 data-i18n-html="controls.title">Mové perillas.<br>Encontrá algo.</h2>
+      <div class="presets" role="group" aria-label="Presets">
+        <button data-preset="neblina" data-i18n="preset.mist">Neblina</button>
+        <button data-preset="pulso" class="selected" data-i18n="preset.pulse">Pulso</button>
+        <button data-preset="orbita" data-i18n="preset.orbit">Órbita</button>
+      </div>
+      <div class="control"><label for="variation"><span data-i18n="controls.variation">Variación</span> <output id="variation-value">62%</output></label><p data-i18n="controls.variationHelp">Cambiá el equilibrio entre las notas.</p><input id="variation" type="range" min="0" max="100" value="62"></div>
+      <div class="control"><label for="density"><span data-i18n="controls.density">Densidad</span> <output id="density-value">78%</output></label><p data-i18n="controls.densityHelp">Ajustá la preparación del qubit de ritmo.</p><input id="density" type="range" min="0" max="100" value="78"></div>
+      <div class="control"><label for="entanglement"><span data-i18n="controls.entanglement">Enlace entre qubits</span> <output id="entanglement-value">55%</output></label><p data-i18n="controls.entanglementHelp">Explorá cambios en las correlaciones.</p><input id="entanglement" type="range" min="0" max="100" value="55"></div>
+      <div class="control"><label for="phase"><span data-i18n="controls.phase">Fase</span> <output id="phase-value">30%</output></label><p data-i18n="controls.phaseHelp">Transformá interferencia en probabilidades.</p><input id="phase" type="range" min="0" max="100" value="30"></div>
+      <div class="tempo-row">
+        <label for="bpm"><span data-i18n="controls.tempo">TEMPO</span><br><div><input type="number" id="bpm" min="60" max="180" value="112"><span>BPM</span></div></label>
+        <label for="steps"><span data-i18n="controls.length">LONGITUD</span><br><select id="steps"><option value="16" data-i18n="controls.oneBar">1 compás</option><option value="32" selected data-i18n="controls.twoBars">2 compases</option><option value="64" data-i18n="controls.fourBars">4 compases</option></select></label>
+      </div>
+      <div class="scale-card"><span class="scale-icon" aria-hidden="true">♬</span><div><b data-i18n="controls.scale">Do menor pentatónica</b><p data-i18n="controls.scaleHelp">Una paleta armónica lista para experimentar.</p></div></div>
+      <div class="tip" data-i18n="controls.tip">Probá el mismo loop con diferentes enlaces. Después generá otra variación.</div>
+    </aside>
+  </div>
+
+  <section class="sound-palette panel" aria-label="Biblioteca de sonidos" data-i18n-aria="mix.label">
+    <div class="palette-head"><div><div class="eyebrow" data-i18n="mix.eyebrow">QUBITS + SONIDOS BASE</div><h2 data-i18n="mix.title">Armá tu mezcla.</h2></div><span class="mono" data-i18n="mix.synthetic">SONIDOS SINTETIZADOS / SIN DESCARGAS</span></div>
+    <div class="mix-grid">
+      <div class="mix-card"><span class="mix-icon">♫</span><label for="mix-melody" data-i18n="mix.quantumMelody">MELODÍA CUÁNTICA</label><select id="mix-melody"><option value="synth" data-i18n="mix.softSynth">Synth suave</option><option value="bell" data-i18n="mix.bells">Campanas</option><option value="pluck">Pluck</option><option value="guitar" data-i18n="mix.synthGuitar">Guitarra sintetizada</option></select><label class="volume-label" for="mix-melodyVolume"><span data-i18n="mix.volume">Volumen</span> <output id="mix-melodyVolume-value">75%</output></label><input id="mix-melodyVolume" type="range" min="0" max="100" value="75"></div>
+      <div class="mix-card"><span class="mix-icon">✹</span><label for="mix-drums" data-i18n="mix.drums">BATERÍA</label><select id="mix-drums"><option value="electro">Electro</option><option value="lofi">Lo-fi</option><option value="rock">Rock</option><option value="none" data-i18n="mix.noDrums">Sin batería</option></select><label class="volume-label" for="mix-drumVolume"><span data-i18n="mix.volume">Volumen</span> <output id="mix-drumVolume-value">55%</output></label><input id="mix-drumVolume" type="range" min="0" max="100" value="55"></div>
+      <div class="mix-card"><span class="mix-icon">≋</span><label for="mix-bassVolume" data-i18n="mix.bass">BAJO</label><p data-i18n="mix.bassHelp">Un pulso grave para sostener el loop. Bajalo a cero para silenciar.</p><label class="volume-label" for="mix-bassVolume"><span data-i18n="mix.volume">Volumen</span> <output id="mix-bassVolume-value">25%</output></label><input id="mix-bassVolume" type="range" min="0" max="100" value="25"></div>
+      <div class="mix-card"><span class="mix-icon">⌁</span><label for="mix-guitar" data-i18n="mix.guitar">GUITARRA BASE</label><select id="mix-guitar"><option value="off" data-i18n="mix.noGuitar">Sin guitarra</option><option value="clean" data-i18n="mix.cleanGuitar">Acordes · limpia</option><option value="muted" data-i18n="mix.mutedGuitar">Acordes · apagada</option></select><label class="volume-label" for="mix-guitarVolume"><span data-i18n="mix.volume">Volumen</span> <output id="mix-guitarVolume-value">35%</output></label><input id="mix-guitarVolume" type="range" min="0" max="100" value="35"></div>
+      <div class="mix-card"><span class="mix-icon">✦</span><label for="mix-effect" data-i18n="mix.effects">EFECTOS</label><select id="mix-effect"><option value="dry" data-i18n="mix.dry">Seco · sin efecto</option><option value="delay">Delay</option><option value="reverb">Reverb</option></select><label class="volume-label" for="mix-effectAmount"><span data-i18n="mix.intensity">Intensidad</span> <output id="mix-effectAmount-value">30%</output></label><input id="mix-effectAmount" type="range" min="0" max="100" value="30"></div>
+    </div>
+    <p class="palette-note" data-i18n="mix.note">La melodía nace del circuito. Las capas base y los efectos son clásicos. El WAV incluye la mezcla y los efectos; el MIDI conserva notas e instrumentos para editar en tu DAW.</p>
+  </section>
+
+  <section class="explainer" id="how-it-works">
+    <div><div class="eyebrow" data-i18n="explain.eyebrow">DE LA FÍSICA A TU DAW</div><h2 data-i18n-html="explain.title">Un circuito.<br>Muchas posibilidades.</h2></div>
+    <div class="explain-card"><span class="index">01</span><h3 data-i18n="explain.prepare">Prepará</h3><p data-i18n="explain.prepareBody">Las rotaciones definen las amplitudes. La fase y las puertas controladas cambian la distribución conjunta.</p></div>
+    <div class="explain-card"><span class="index">02</span><h3 data-i18n="explain.measure">Medí</h3><p data-i18n="explain.measureBody">Cada estado de cuatro bits se traduce en altura, silencio y acento. La correlación mostrada es información mutua de mediciones.</p></div>
+    <div class="explain-card"><span class="index">03</span><h3 data-i18n="explain.produce">Producí</h3><p data-i18n="explain.produceBody">Escuchá una secuencia de esa distribución. Exportá el MIDI y hacela tuya en Ableton, FL Studio o tu DAW favorito.</p></div>
+  </section>
+
+  <details class="technical">
+    <summary><span data-i18n="technical.summary">Ver el circuito y el alcance del experimento</span> <span>+</span></summary>
+    <div>
+      <pre id="circuit"></pre>
+      <p data-i18n="technical.bits">Orden de bits: q3 q2 q1 q0. q0 y q1 eligen cuatro alturas; q2 decide nota o silencio; q3 cambia registro y acento. Escala: C, Eb, F, G, Bb, C, Eb, F. El beat, la escala y el sintetizador son clásicos. La densidad final también depende de las puertas de enlace.</p>
+      <p data-i18n="technical.scope">La demo usa un simulador clásico de estados cuánticos. La web envía el circuito validado con Qiskit a la API de IonQ y recibe las probabilidades de su simulador cloud. El script Python también permite ejecutarlo mediante el proveedor Qiskit-IonQ. Ambos usan el mismo circuito; no es una ejecución en hardware. El loop se muestrea clásicamente de las probabilidades devueltas por IonQ, o del histograma al importar un archivo. No se utiliza un orden temporal de mediciones. No afirmamos ventaja cuántica ni superioridad musical frente a un generador clásico.</p>
+      <p><a href="https://docs.ionq.com/sdks/qiskit" target="_blank" rel="noreferrer" data-i18n="technical.docs">Documentación de IonQ ↗</a></p>
+    </div>
+  </details>
+</main>
+
+<footer><span class="brand">QuantumDJ</span><span>CREATIVE QUANTUM EXPERIMENT · QOLLAB</span><span>Made for the next idea.</span></footer>
+
+<dialog id="ionq-dialog">
+  <div class="dialog-head"><span class="eyebrow" data-i18n="dialog.eyebrow">CONECTÁ TU PROYECTO DE IONQ</span><button id="ionq-close" class="square" aria-label="Cerrar" data-i18n-aria="dialog.close">×</button></div>
+  <h2 data-i18n-html="dialog.title">De tu key<br>a tu próximo loop.</h2>
+  <p data-i18n="dialog.body">La key se usa para conectar con IonQ a través del servidor de esta web. Permanece en memoria durante esta sesión; no se guarda en archivos ni en el almacenamiento del navegador.</p>
+  <form id="ionq-form" autocomplete="off">
+    <label for="ionq-key" data-i18n="dialog.keyLabel">API key de IonQ</label>
+    <input id="ionq-key" type="password" autocomplete="off" spellcheck="false" placeholder="Pegá tu key acá, sin compartirla en el chat" data-i18n-placeholder="dialog.keyPlaceholder">
+    <div class="connection-actions"><button id="ionq-connect" class="primary" type="submit" data-i18n="dialog.connect">Conectar con IonQ ↗</button><button id="ionq-disconnect" class="quiet" type="button" data-i18n="dialog.disconnect">Desconectar</button></div>
+    <p id="connection-status" role="status"></p>
+  </form>
+  <p class="fine" data-i18n="dialog.fine">La ejecución usa el simulador cloud de IonQ. El job ID y la distribución real se mostrarán en el estudio cuando termine.</p>
+  <details class="connection-advanced">
+    <summary data-i18n="dialog.advanced">Recuperar un job / importar un resultado</summary>
+    <p data-i18n="dialog.resumeHelp">Para retomar un job QuantumDJ ya enviado, conectá la misma key e ingresá su ID.</p>
+    <label for="resume-job-id">Job ID</label>
+    <input id="resume-job-id" type="text" placeholder="UUID del job de QuantumDJ" data-i18n-placeholder="dialog.jobPlaceholder">
+    <button id="resume-job" class="quiet" data-i18n="dialog.resume">Consultar job existente</button><br>
+    <button id="config-download" class="quiet" data-i18n="dialog.config">↓ Configuración</button>
+    <label class="primary upload" for="import" data-i18n="dialog.import">↑ Importar JSON</label>
+    <input id="import" type="file" accept=".json,application/json">
+    <p id="import-status" role="status"></p>
+  </details>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="engine.js"></script>
+<script src="sounds.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
